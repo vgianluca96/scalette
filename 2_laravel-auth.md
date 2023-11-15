@@ -1,7 +1,6 @@
 
 # Creazione web app con autenticazione
 
-## Operazioni preliminari
 - Nuovo progetto
 ```bash
 laravel new nome-cartella-progetto
@@ -35,6 +34,8 @@ php artisan preset:ui bootstrap --auth
 
 - [se necessario] Cambio l'estensione di `viteconfig.js` in `.cjs`
 
+# Altre operazioni
+
 ## [opzionale] Refactoring codice - spostamento di dashboard.blade
 
 - Creo controller della dashboard
@@ -53,7 +54,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
 - NOTA: in `app.blade` occorrera sostituire `url('dashboard')` con `route('admin.dashboard')`
 
-## Aggiornamento RouteServiceProvider
+### Aggiornamento RouteServiceProvider
 
 - in `app/Providers/RouteServiceProvider.php` assegno alla variabile `HOME` il valore `/admin`, così al login sarò rimandato alla url corretta
 
@@ -70,7 +71,7 @@ php artisan make:model Nomemodello -a
 - imposto le CRUD
     - NOTA: i metodi `store` e `update` dovranno avere le validazioni
 
-### Impostare la pagination
+## Impostare la pagination
 - Nel resource controller, nella crud `index`, aggiungo il metodo `paginate`
 ```php
 public function index()
