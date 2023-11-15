@@ -14,9 +14,11 @@ composer install
 npm install
 ```
 - Copia di `.env.example` e lo rinomino in `.env`
+- Genero la chiave
 ```bash
 php artisan key:generate
 ```
+- Avvio il server
 ```bash
 php artisan serve e npm run dev
 ```
@@ -31,7 +33,7 @@ git checkout -b nome-branch
 - Si pubblica il branch
 - Si fa compare & pull request
 
-## Per importare modifiche pubblicate da altri
+## Per importare in locale modifiche pubblicate da altri
 ```bash
 git checkout main
 ```
