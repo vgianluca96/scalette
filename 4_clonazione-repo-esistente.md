@@ -1,47 +1,47 @@
-# clonare repo esistente
+# Clonazione repo esistente
 
-- comando git clone
+- Comando git clone
 ```bash
-git clone link-github-vecchia-repo nome-nuova-repo-locale
+git clone link-github-vecchia-repo indirizzo-locale-nuova-folder
 ```
 
-- rimozione cartella .git vecchia
+- Rimozione cartella .git vecchia
 ```bash
 rm -rf .git
 ```
 
-- inizializzazione, add e commit
+- Inizializzazione, add e commit
 ```bash
 git init
 git add .
 git commit -m"messaggio"
 ```
 
-- comandi di inizializzazione della repo
+- Comandi di inizializzazione della repo
 ```bash
-git remote add origin https://github.com/vgianluca96/example-address.git
+git remote add origin https://github.com/vgianluca96/nome-repo.git
 git branch -M main
 git push -u origin main
 ```
 
-- installazione composer
+- Installazione composer
 ```bash
 composer install
 ```
 
-- copia incolla .env-example e rinomina in .env
+- Copia incolla `.env-example` e rinomina in `.env`
 
-- generazione chiave
+- Generazione chiave
 ```bash
 php artisan key:generate
 ```
 
-- comando storage link
+- Comando storage link
 ```bash
 php artisan storage:link
 ```
 
-- installazione npm
+- Installazione npm
 ```bash
 - npm install
 ```

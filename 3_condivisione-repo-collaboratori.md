@@ -13,7 +13,7 @@ composer install
 ```bash
 npm install
 ```
-- copia di `.env.example` e lo rinomino in `.env`
+- Copia di `.env.example` e lo rinomino in `.env`
 ```bash
 php artisan key:generate
 ```
@@ -22,14 +22,14 @@ php artisan serve e npm run dev
 ```
 
 ## Per fare modifiche su un branch diverso dal main
-- si crea nuovo branch 
+- Si crea nuovo branch 
 ```bash
 git checkout -b nome-branch
 ```
-- si fanno le modifiche
-- si committa
-- si pubblica il branch
-- si fa compare & pull request
+- Si fanno le modifiche
+- Si committa
+- Si pubblica il branch
+- Si fa compare & pull request
 
 ## Per importare modifiche pubblicate da altri
 ```bash
@@ -39,7 +39,7 @@ git checkout main
 git pull
 ```
 
-## se sono state fatte modifiche ai pacchetti
+## Se sono state fatte modifiche ai pacchetti
 ```bash
 composer install
 ```
