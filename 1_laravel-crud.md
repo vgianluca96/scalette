@@ -1,21 +1,55 @@
 
-# Procedimento di creazione progetto laravel che usa CRUD operations
+# Procedimento di creazione progetto laravel con autenticazione e CRUD operations
 
-1. creazione e connessione db (modificando file .env)
-2. link al file system
-3. scaffolding
-4. creazione di un Model
-5. creazione della migrazione
-6. creazione resource controller per il Model dato (e.g. se il Model è Comic, il resource controller è ComicController)
-7. creazione routes in web.php
-8. Creazione layout
-9. implementazione delle CRUD nel resource controller
+1. Operazioni preliminari
+2. Creazione e connessione db
+3. Link al file system
+4. Creazione Model, resource controller associato, migration, seeder
+5. Creazione routes in web.php
+6. Creazione layout
+7. Implementazione delle CRUD nel resource controller
 
-## 1. Creazione e connessione db
 
-Creare il db in phpmyadmin
+## 1. Operazioni preliminari
 
-modificare il file .env
+- Creare nuovo progetto (assumo nome folder sarà `laravel-dc-comics`)
+```bash
+laravel new laravel-dc-comics
+```
+
+- [opzionale] Installare pacchetto di autenticazione (breeze)
+```bash
+composer require laravel/breeze --dev
+```
+
+```bash
+php artisan breeze:install
+# selezionare le seguenti opzioni
+#    - blade with alpine
+#    - no
+#    - pest
+```
+
+- Installare bootstrap & npm (https://packagist.org/packages/pacificdev/laravel_9_preset)
+```bash
+composer require pacificdev/laravel_9_preset
+```
+
+```bash
+php artisan preset:ui bootstrap --auth
+```
+
+```bash
+npm i
+```
+
+- Aprire file `package.json` ed eliminare stringa `type:module`
+
+- [se necessario] Cambiare l'estensione di `viteconfig.js` in `.cjs`
+
+## 2. Creazione e connessione db
+
+- Modificare il file `.env` (assumo che il nome del database sarà `laravel_dc_comics`)
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -25,98 +59,103 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-## 2. link al file system
+- Creare il db in phpmyadmin dandogli lo stesso nome che si è messo in `DB_DATABASE` oppure far girare una prima migrazione
+```bash
+php artisan migrate
+```
 
-modificare il file .env
+- Se si fa girare una prima migrazione, il terminale chiederà se si vuole creare il database `laravel_dc_comics`, basta rispondere `yes`
+
+## 3. Link al file system
+
+- Modificare il file `.env`
 ```env
 FILESYSTEM_DISK=public
 ```
 
-modificare il file config\filesystems.php
+- Modificare il file `config\filesystems.php`
 ```php
 'default' => env('FILESYSTEM_DISK','public')
 ```
 
-eseguire il comando artisan storage link
+- Eseguire il comando artisan storage link
 ```bash
 php artisan storage:link
 ```
 
-## 3. scaffolding
+## 4. Creazione Model, resource controller associato, migration, seeder
 
-Installazione di laravel 9 preset
-
-## 4. e 5. Creazione Model + migrazione
+### 1. Creazione model e separatamente resource controller
+```bash
+php artisan make:model Comic
+```
 
 ```bash
-#creazione modello, migrazione e seed
+php artisan make:controller Admin\ComicController --resource --model=Comic
+```
+
+### 2. Creazione model, resource controller, in aggiunta migrazione e seed
+```bash
 php artisan make:model Comic -ms
 ```
 
-NOTA: esiste anche il seguente comando
+### 3. Creazione model, resource controller, in aggiunta  migrazione, seeder e form request
 ```bash
-#creazione modello, migrazione e seed
 php artisan make:model Comic -a
 ```
-Questo comando crea migrazione, seeder, controller e pure le form request. Notare che con questo comando, se voglio cambiare cartella al controller e metterlo ad esempio in admin, dovrò cambiargli namespace.
 
-Altrimenti posso cancellare il controller e rigenerarlo tramite il comando
-```bash
-#creazione modello, migrazione e seed
-php artisan make:controller --model=Comic
+### NOTA:
+Seguendo i punti 2 oppure 3, il controller sarà nella cartella `Controllers`. Se voglio averlo in `Controllers\Admin` come fatto al punto 1, dovrò cambiargli namespace e importare Controller tramite `use`
+```php
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 ```
 
-### comandi terminale per migrazione e seeder
-Se in DatabaseSeeder si scrive il seguente codice
+### Comandi terminale per  eseguire migrazione e seeder
 
+Per eseguire solo la migrazione
+```bash
+php artisan migrate
+```
+
+Ci sono due modi per eseguire uno o più seeder
+
+#### Modo 1
+- Aggiungere uno o più seeder in `DatabaseSeeder`
 ```php
 $this->call([
     ComicsSeeder::class,
+    OtherSeeder::class,
 ]);
 ```
 
-Allora si può eseguire il comando seguente
+- Eseguire Il comando bash
 ```bash
 php artisan migrate --seed
 ```
 
-Altrimenti è necessario eseguire il comando specificando la classe
+#### Modo 2
+- Eseguire un seeder alla volta (specificando il nome in `class`)
 ```bash
 php artisan db:seed --class=ComicsSeeder
 ```
 
-## 6. Creazione resource controller
+## 5. Creazione routes
 
-```bash
-# notare che per convenzione si crea nella cartella Admin
-# viene abbinato al model Comic
-php artisan make:controller Admin/ComicController --resource --model=Comic
-```
-
-## 7. Creazione routes
-
-In web.php
+- Aprire il file `web.php` e aggiungere il seguente codice
 ```php
 Route::resource('admin/comics', ComicController::class);
 ```
 
 ### Attenzione
 
-ricordarsi di importare il controller in web.php
+Ricordarsi di importare il controller in `web.php`
 ```php
 use App\Http\Controllers\Admin\ComicsController;
 ```
 
-## 8. Creazione layout
-
-Si avrà la seguente struttura
-```
-/layouts
-    - app.blade
-    - admin.blade
-```
-
-## 9. implementazione delle CRUD nel resource controller
+## 6. implementazione delle CRUD nel resource controller
 
 ### index
 
@@ -136,17 +175,17 @@ public function index() {
 
 ```php
 public function create() {
-
     return view('admin.comics.create');
 }
 ```
 
-successivamente in admin/comics/create.blade.php si creerà il form.
+In `admin/comics/create.blade.php` si creerà il form.
 
 ```php
 <form action="route{{'comics.store'}}", method='POST' enctype="multipart/form-data">
 
 @csrf
+
 ...
 
 </form>
@@ -157,7 +196,7 @@ successivamente in admin/comics/create.blade.php si creerà il form.
 ```php
 public function store(Request $request) {
 
-    $data = request->all();
+    $data = $request->all();
     Comic::create($data);
 
     /* metodo alternativo
@@ -168,15 +207,14 @@ public function store(Request $request) {
     $comic->save();
     */
 
-    return to_route('comics.show')->with('message','Operation successfull');
+    return to_route('comics.index')->with('message','Operation successfull');
 
 }
 ```
 
 ### Attenzione
 
-Attenzione al mass assingment error. Quando si usa il create method sul Model è necessario aggiungere una fillable property nel modello
-
+Attenzione al `mass assignment error`. Quando si usa il create method sul Model è necessario aggiungere una fillable property nel modello in cui si elencano tutti i campi che si aggiungono tramite la `request`
 ```php
 class Comic extends Model
 {
@@ -204,7 +242,7 @@ public function edit(Comic $comic) {
 }
 ```
 
-successivamente in admin/comics/edit.blade.php si creerà il form.
+successivamente in `admin/comics/edit.blade.php` si creerà il form.
 
 ```php
 <form action="route{{'comics.update'}}, $comic->id", method='POST'>
@@ -222,7 +260,7 @@ successivamente in admin/comics/edit.blade.php si creerà il form.
 ```php
 public function update(Request $request Comic $comic) {
 
-    $data = request->all();
+    $data = $request->all();
     $comic->update($data);
     return to_route('comics.index')->with('message','Operation successfull');
 }
