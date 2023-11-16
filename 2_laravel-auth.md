@@ -40,10 +40,10 @@ php artisan preset:ui bootstrap --auth
 
 - Creo controller della dashboard
 ```bash
-php artisan make:controller Admin\DashboardController
+php artisan make:controller Admin/DashboardController
 ```
 
-- `dashboard.blade` lo sposto in `view\admin`
+- `dashboard.blade` lo sposto in `view/admin`
 - Aggiorno la rotta corrispondente in `web.php`
 
 ```php

@@ -91,7 +91,7 @@ php artisan make:model Comic
 ```
 
 ```bash
-php artisan make:controller Admin\ComicController --resource --model=Comic
+php artisan make:controller Admin/ComicController --resource --model=Comic
 ```
 
 ### 2. Creazione model, resource controller, in aggiunta migrazione e seed

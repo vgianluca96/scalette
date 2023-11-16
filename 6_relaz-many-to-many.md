@@ -1,26 +1,45 @@
-# scaletta relazioni many-to-many
+# Scaletta relazioni many-to-many
 
-- creazione modello con migration e seeder (esempio: modello denominato Technology)
+- NOTA: assumo una relazione many-to-many tra i model `Technology` e `Project`
+
+- Creare modello `Technology` con migration e seeder
 ```bash
 php artisan make:model Technology -ms
 ```
 
-- Impostazione migrazione e Seeder di Technology
+- Impostare migrazione e Seeder di `Technology`
 
-- Esecuzione migrazione e seeder
-```bash
-php artisan migrate
-php artisan db:seed --class=TechnologySeeder
-```
-
-- Creazione migration per tabella pivot
+- Creare migration per tabella pivot
 ```bash
 php artisan make:migration create_project_technology_table
 ```
 
-- aggiungere ai model Project e Technology (ovvero i model da mettere in relazione) i metodi per definire la relazione many to many
+- All'interno della tabella pivot
+```php
+public function up(): void
+    {
+        Schema::create('project_technology', function (Blueprint $table) {
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
 
-- in Project
+
+            $table->unsignedBigInteger('technology_id');
+            $table->foreign('technology_id')->references('id')->on('technologies');
+
+            $table->primary(['project_id', 'technology_id']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropForeign('project_technology_technology_id_foreign');
+        Schema::dropIfExists('project_technology');
+    }
+```
+
+- Aggiungere ai model `Project` e `Technology` i metodi per definire la relazione many to many
+
+- in `Project`
 ```php
 public function technologies(): BelongsToMany
     {
@@ -28,7 +47,7 @@ public function technologies(): BelongsToMany
     }
 ```
 
-- in Technology
+- in `Technology`
 ```php
 public function projects(): BelongsToMany
     {
@@ -36,7 +55,8 @@ public function projects(): BelongsToMany
     }
 ```
 
-- Esecuzione migrazione
+- Eseguire migrazione e fare il seed di `Technology`
 ```bash
 php artisan migrate
+php artisan db:seed --class=TechnologySeeder
 ```

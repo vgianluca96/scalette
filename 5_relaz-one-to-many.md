@@ -1,16 +1,20 @@
-# scaletta relazioni one-to-many
+# Scaletta relazioni one-to-many
 
-- creazione modello con migrazione e seeder (ad esempio Type)
+- NOTA: assumo una relazione one-to-many tra i model `Type` e `Project`
+
+- Creare model `Type` con migrazione e seeder
 ```bash
 php artisan make:model Type -ms
 ```
 
-- creare la migration di modifica per la tabella projects per aggiungere la chiave esterna
+- Impostare migrazione e Seeder di `Type`
+
+- Creare la migration di modifica per la tabella `projects` per aggiungere la chiave esterna
 ```bash
 php artisan make:migration add_type_id_foreign_key_to_projects_table
 ```
 
-- all'interno della migration si dovrà avere
+- All'interno della migration si dovrà avere
 ```php
 public function up(): void
     {
@@ -19,7 +23,9 @@ public function up(): void
 
             $table->foreign('type_id')
                 ->references('id')
-                ->on('types');
+                ->on('types')
+                ->cascadeOnDelete();
+                // cascadeOnDelete serve per propagare su projects la cancellazione di un type??
         });
     }
 
@@ -31,9 +37,9 @@ public function down(): void
     }
 ```
 
-- aggiungere ai model Project e Type (ovvero i model da mettere in relazione) i metodi per definire la relazione one to many
+- Aggiungere ai model `Project` e `Type` i metodi per definire la relazione one to many
 
-- in Project
+- in `Project`
 ```php
  public function type(): BelongsTo
     {
@@ -42,7 +48,7 @@ public function down(): void
 
 ```
 
-- in Type
+- in `Type`
 ```php
 public function projects(): HasMany
     {
@@ -50,7 +56,7 @@ public function projects(): HasMany
     }
 ```
 
-- migrare e fare il seed della tabella types
+- Migrare e fare il seed della tabella `types`
 ```bash
 php artisan migrate
 php artisan db:seed --class=TypeSeeder
