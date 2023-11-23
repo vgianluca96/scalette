@@ -36,6 +36,10 @@ composer require pacificdev/laravel_9_preset
 ```
 
 ```bash
+# se NON si è installato breeze (guardare link laravel 9 preset per apprfondimenti)
+php artisan preset:ui bootstrap
+
+# altrimenti
 php artisan preset:ui bootstrap --auth
 ```
 
