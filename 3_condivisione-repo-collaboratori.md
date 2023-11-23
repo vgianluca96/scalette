@@ -5,6 +5,9 @@
 
 ## Se sono invitato come collaboratore
 - Clono la repo
+```bash
+git clone link-github-repo nome-folder-locale
+```
 - Installo composer
 ```bash
 composer install
@@ -28,10 +31,10 @@ php artisan serve e npm run dev
 ```bash
 git checkout -b nome-branch
 ```
-- Si fanno le modifiche
-- Si committa
-- Si pubblica il branch
-- Si fa compare & pull request
+- Dopo aver fatto le modifiche al codice
+    - Si mettono in stage le modifiche e si committa (git add . e git commit -m"messaggio")
+    - Si pubblica il branch
+    - L'amministratore della repo farà compare & pull request (e gestirà eventuali conflitti)
 
 ## Per importare in locale modifiche pubblicate da altri
 ```bash

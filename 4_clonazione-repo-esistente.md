@@ -2,7 +2,7 @@
 
 - Comando git clone
 ```bash
-git clone link-github-vecchia-repo indirizzo-locale-nuova-folder
+git clone link-github-vecchia-repo nome-nuova-folder-locale
 ```
 
 - Rimozione cartella .git vecchia
