@@ -21,9 +21,13 @@ npm install
 ```bash
 php artisan key:generate
 ```
-- Avvio il server
+- Avvio i server
 ```bash
-php artisan serve e npm run dev
+php artisan serve
+npm run dev
+
+# se c'è anche l'app frontend apro un nuovo terminale
+npm run dev
 ```
 
 ## Per fare modifiche su un branch diverso dal main
@@ -31,10 +35,17 @@ php artisan serve e npm run dev
 ```bash
 git checkout -b nome-branch
 ```
-- Dopo aver fatto le modifiche al codice
-    - Si mettono in stage le modifiche e si committa (git add . e git commit -m"messaggio")
-    - Si pubblica il branch
-    - L'amministratore della repo farà compare & pull request (e gestirà eventuali conflitti)
+Dopo aver fatto le modifiche al codice
+- Si mettono in stage le modifiche e si committa
+```bash
+git add .
+git commit -m"messaggio"
+```
+- Si pubblica il branch
+```bash
+git push
+```
+- L'amministratore della repo farà compare & pull request (e gestirà eventuali conflitti)
 
 ## Per importare in locale modifiche pubblicate da altri
 ```bash
