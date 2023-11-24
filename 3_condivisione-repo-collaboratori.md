@@ -30,27 +30,27 @@ npm run dev
 npm run dev
 ```
 
-## Per fare modifiche su un branch diverso dal main
-- Si crea nuovo branch 
+## Processo di aggiornamento di un progetto tra più collaboratori
+- [`Github`] L'amministratore della repo crea delle `issue` basate sulla suddivisione del lavoro; ogni `issue` sarà assegnata ad un collaboratore
+- [`VS Code`] Ogni collaboratore crea un nuovo branch
 ```bash
 git checkout -b nome-branch
 ```
-Dopo aver fatto le modifiche al codice
-- Si mettono in stage le modifiche e si committa
+Dopo aver fatto le modifiche al codice si pubblica il branch con la solita procedura
 ```bash
 git add .
 git commit -m"messaggio"
-```
-- Si pubblica il branch
-```bash
 git push
 ```
-- L'amministratore della repo farà compare & pull request (e gestirà eventuali conflitti)
+- [`Github`] Si crea `pull request` associandola alla `issue` (può essere fatto sia dal collaboratore sia dall'amministratore)
+- L'amministratore farà il merge della `pull request` (gestendo eventuali conflitti)
 
 ## Per importare in locale modifiche pubblicate da altri
+- Ritorno al branch `main`
 ```bash
 git checkout main
 ```
+- pull delle modifiche
 ```bash
 git pull
 ```
