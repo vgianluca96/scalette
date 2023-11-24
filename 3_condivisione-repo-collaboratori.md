@@ -36,14 +36,14 @@ npm run dev
 ```bash
 git checkout -b nome-branch
 ```
-Dopo aver fatto le modifiche al codice si pubblica il branch con la solita procedura
+- Dopo aver fatto le modifiche al codice si pubblica il branch con la solita procedura
 ```bash
 git add .
 git commit -m"messaggio"
 git push
 ```
 - [`Github`] Si crea `pull request` associandola alla `issue` (può essere fatto sia dal collaboratore sia dall'amministratore)
-- L'amministratore farà il merge della `pull request` (gestendo eventuali conflitti)
+- L'amministratore farà il `merge` della `pull request` (gestendo eventuali conflitti)
 
 ## Per importare in locale modifiche pubblicate da altri
 - Ritorno al branch `main`
